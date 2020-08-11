@@ -6,12 +6,22 @@ import java.util.Set;
 
 public class Srm02PorCompradorCreator {
 	
-	private String relatorioBase = "srm02.f111";		
+	private String repositorio;
+	private String diretorioEnviar;
+	private String relatorioBase;	
+	private String nomeRelatorio;
+	
+	public Srm02PorCompradorCreator() {
+		this.repositorio = "c:\\home\\usuario\\projetos\\relatoriosdiarios\\repositorio\\";
+		this.diretorioEnviar = "c:\\home\\usuario\\projetos\\relatoriosdiarios\\enviar\\";
+		this.relatorioBase = "srm02.f111";	
+		this.nomeRelatorio = "srm02_comprador";
+	}
 
 	public void create() {
 
 		LeitorDeArquivo leitor = new LeitorDeArquivo();
-		List<String> texto = leitor.le(Paths.get("c:\\home\\" + relatorioBase));
+		List<String> texto = leitor.le(Paths.get(repositorio + relatorioBase));
 
 		for (Integer n : verificaNumeroDeCompradores(texto)) {
 			EscritorDeArquivo escritor = new EscritorDeArquivo();
@@ -22,10 +32,8 @@ public class Srm02PorCompradorCreator {
 
 	private String geraNomeDoArquivo(Integer n) {
 
-		String diretorio = "c:\\home\\";
-		String nomeDoArquivo = "srm02.comprador" + n + ".f111";
-
-		return diretorio + nomeDoArquivo;
+		String nomeDoArquivo = nomeRelatorio + n + ".f111";
+		return diretorioEnviar + nomeDoArquivo;
 	}
 
 	private Set<Integer> verificaNumeroDeCompradores(List<String> texto) {
@@ -35,10 +43,14 @@ public class Srm02PorCompradorCreator {
 		for (String linha : texto) {
 
 			if (linha.contains("COMPRADOR.:")) {
-				compradores.add(Integer.parseInt(linha.substring(13, 18).trim()));
+				compradores.add(getNumeroDeComprador(linha));
 			}
 		}
 		return compradores;
+	}
+
+	private int getNumeroDeComprador(String linha) {
+		return Integer.parseInt(linha.substring(13, 18).trim());
 	}
 
 	private List<String> separadorDeConteudo(int comprador, List<String> texto) {
@@ -48,7 +60,7 @@ public class Srm02PorCompradorCreator {
 
 		for (String line : texto) {
 			if (line.contains("COMPRADOR.:")) {
-				if (Integer.parseInt(line.substring(13, 18).trim()) == comprador) {
+				if (getNumeroDeComprador(line) == comprador) {
 					exec = true;
 				} else {
 					exec = false;
