@@ -6,18 +6,12 @@ import java.util.Set;
 
 public class Srm02PorCompradorCreator {
 	
-	private String repositorio;
-	private String diretorioEnviar;
-	private String relatorioBase;	
-	private String nomeRelatorio;
+	private final String repositorio = "c:\\home\\usuario\\projetos\\relatoriosdiarios\\repositorio\\";;
+	private final String diretorioEnviar = "c:\\home\\usuario\\projetos\\relatoriosdiarios\\enviar\\";;
+	private final String relatorioBase = "srm02.f111";	
+	private final String nomeRelatorio = "srm02_comprador";
 	
-	public Srm02PorCompradorCreator() {
-		this.repositorio = "c:\\home\\usuario\\projetos\\relatoriosdiarios\\repositorio\\";
-		this.diretorioEnviar = "c:\\home\\usuario\\projetos\\relatoriosdiarios\\enviar\\";
-		this.relatorioBase = "srm02.f111";	
-		this.nomeRelatorio = "srm02_comprador";
-	}
-
+	
 	public void create() {
 
 		LeitorDeArquivo leitor = new LeitorDeArquivo();
