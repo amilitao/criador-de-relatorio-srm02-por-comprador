@@ -17,9 +17,9 @@ public class Srm02PorCompradorCreator {
 		LeitorDeArquivo leitor = new LeitorDeArquivo();
 		List<String> texto = leitor.le(Paths.get(repositorio + relatorioBase));
 
-		for (Integer n : verificaNumeroDeCompradores(texto)) {
+		for (Integer numero : verificaNumeroDeCompradores(texto)) {
 			EscritorDeArquivo escritor = new EscritorDeArquivo();
-			escritor.escreve(separadorDeConteudo(n, texto), geraNomeDoArquivo(n));
+			escritor.escreve(separadorDeConteudo(numero, texto), geraNomeDoArquivo(numero));
 		}
 
 	}
