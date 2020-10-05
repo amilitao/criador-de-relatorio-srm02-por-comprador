@@ -1,23 +1,28 @@
-import java.nio.file.Paths;
+import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Srm02PorCompradorCreator {
+public class Srm02PorCompradorCreator {	
 	
-	private final String repositorio = "c:\\home\\usuario\\projetos\\relatoriosdiarios\\repositorio\\";;
-	private final String diretorioEnviar = "c:\\home\\usuario\\projetos\\relatoriosdiarios\\enviar\\";;
-	private final String relatorioBase = "srm02.f111";	
+	private Path arquivoBase;
+	private Path destino;
 	private final String nomeRelatorio = "srm02_comprador";
+	
+	public Srm02PorCompradorCreator(Path arquivoBase, Path destino) {		
+		this.arquivoBase = arquivoBase;
+		this.destino = destino;
+	}
 	
 	
 	public void create() {
 
 		LeitorDeArquivo leitor = new LeitorDeArquivo();
-		List<String> texto = leitor.le(Paths.get(repositorio + relatorioBase));
+		List<String> texto = leitor.le(arquivoBase);
 
-		for (Integer numero : verificaNumeroDeCompradores(texto)) {
+		for (Integer numero : verificaNumeroDeCompradores(texto)) {	
 			EscritorDeArquivo escritor = new EscritorDeArquivo();
 			escritor.escreve(separadorDeConteudo(numero, texto), geraNomeDoArquivo(numero));
 		}
@@ -27,7 +32,7 @@ public class Srm02PorCompradorCreator {
 	private String geraNomeDoArquivo(Integer n) {
 
 		String nomeDoArquivo = nomeRelatorio + n + ".f111";
-		return diretorioEnviar + nomeDoArquivo;
+		return destino + File.separator + nomeDoArquivo;
 	}
 
 	private Set<Integer> verificaNumeroDeCompradores(List<String> texto) {

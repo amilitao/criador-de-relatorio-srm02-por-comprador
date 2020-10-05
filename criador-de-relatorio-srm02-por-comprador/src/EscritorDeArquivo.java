@@ -5,11 +5,11 @@ import java.util.List;
 
 public class EscritorDeArquivo {
 
-	public void escreve(List<String> conteudo, String path) {
+	public void escreve(List<String> linhas, String path) {
 
 		try (FileWriter fw = new FileWriter(path); BufferedWriter bw = new BufferedWriter(fw);) {
 
-			for (String linha : conteudo) {				
+			for (String linha : linhas) {			
 				bw.write(linha);
 				bw.newLine();
 			}
